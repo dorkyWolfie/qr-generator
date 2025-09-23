@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 const qrCodeSchema = new mongoose.Schema({
   userId: {
@@ -10,7 +10,7 @@ const qrCodeSchema = new mongoose.Schema({
   shortId: {
     type: String,
     unique: true,
-    default: () => uuidv4().substring(0, 8),
+    default: () => crypto.randomBytes(4).toString('hex'),
     validate: {
       validator: function(v) {
         // Allow alphanumeric characters, hyphens, and underscores
