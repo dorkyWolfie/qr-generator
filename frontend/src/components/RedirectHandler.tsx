@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const RedirectHandler: React.FC = () => {
   const { shortId } = useParams<{ shortId: string }>();
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (shortId) {
@@ -11,42 +10,6 @@ const RedirectHandler: React.FC = () => {
       window.location.href = `/r/${shortId}`;
     }
   }, [shortId]);
-
-  if (error) {
-    return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#f7fafc',
-        padding: '20px'
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          padding: '40px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          textAlign: 'center',
-          maxWidth: '400px'
-        }}>
-          <h1 style={{
-            color: '#e53e3e',
-            marginBottom: '16px',
-            fontSize: '24px'
-          }}>
-            Error
-          </h1>
-          <p style={{
-            color: '#4a5568',
-            fontSize: '16px'
-          }}>
-            {error}
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{
