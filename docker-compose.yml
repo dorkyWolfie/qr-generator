@@ -26,9 +26,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    environment:
-      - BACKEND_URL=https://srv.rdr.mk/api
-      - BACKEND_BASE_URL=https://srv.rdr.mk
     depends_on:
       - backend
     restart: unless-stopped
