@@ -26,9 +26,9 @@ server {
     add_header Referrer-Policy "no-referrer-when-downgrade" always;
     add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
 
-    # Proxy redirect requests to backend
+    # Proxy redirect requests to backend (NOT under /api/ path)
     location /r/ {
-        proxy_pass ${BACKEND_URL}/r/;
+        proxy_pass ${BACKEND_BASE_URL}/r/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
