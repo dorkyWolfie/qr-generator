@@ -37,7 +37,14 @@ const generalLimiter = rateLimit(rateLimitConfig.general);
 const authLimiter = rateLimit(rateLimitConfig.auth);
 const qrLimiter = rateLimit(rateLimitConfig.qrCreation);
 
-app.use(generalLimiter);
+// Apply general rate limiting to all routes EXCEPT /r/ redirects
+app.use((req, res, next) => {
+  if (req.path.startsWith('/r/')) {
+    // Skip rate limiting for redirect endpoints
+    return next();
+  }
+  return generalLimiter(req, res, next);
+});
 
 app.use(cors({
   origin: process.env.CLIENT_URL,
