@@ -32,7 +32,11 @@ const Register: React.FC = () => {
       await register(username, email, password);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed');
+      if (err.response?.status === 429) {
+        setError('Too many attempts. Please try again later.');
+      } else {
+        setError(err.response?.data?.message || 'Registration failed');
+      }
     } finally {
       setLoading(false);
     }
