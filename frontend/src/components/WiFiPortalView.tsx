@@ -23,7 +23,8 @@ const WiFiPortalView: React.FC = () => {
   useEffect(() => {
     const fetchPortal = async () => {
       try {
-        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+        // Use relative path for production or env variable for development
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '/api';
         const response = await axios.get(`${API_BASE_URL}/wifi-portal/public/${slug}`);
         if (response.data.success) {
           setPortal(response.data.portal);
