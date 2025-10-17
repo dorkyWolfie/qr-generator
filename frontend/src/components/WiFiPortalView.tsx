@@ -24,7 +24,7 @@ const WiFiPortalView: React.FC = () => {
     const fetchPortal = async () => {
       try {
         // Use absolute path for API calls
-        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || `${window.location.origin}/api`;
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://srv.rdr.mk/api';
         const fullUrl = `${API_BASE_URL}/wifi-portal/public/${slug}`;
         console.log('Fetching WiFi portal from:', fullUrl);
         const response = await axios.get(fullUrl);
