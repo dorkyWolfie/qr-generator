@@ -6,6 +6,8 @@ import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import RedirectHandler from './components/RedirectHandler';
+import WiFiPortalView from './components/WiFiPortalView';
+import WiFiPortalDashboard from './components/WiFiPortalDashboard';
 import './App.css';
 
 function App() {
@@ -26,6 +28,15 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/wifi-portals"
+              element={
+                <ProtectedRoute>
+                  <WiFiPortalDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/wifi/:slug" element={<WiFiPortalView />} />
             <Route path="/r/:shortId" element={<RedirectHandler />} />
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </Routes>

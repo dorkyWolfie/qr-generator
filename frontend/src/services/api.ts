@@ -49,6 +49,31 @@ export interface QRListResponse {
   qrCodes: QRCodeData[];
 }
 
+export interface WiFiPortalData {
+  portalId: string;
+  slug: string;
+  title: string;
+  ssid: string;
+  password?: string;
+  security: string;
+  instructions: string;
+  qrCodeData: string;
+  portalUrl: string;
+  visits: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface WiFiPortalResponse {
+  message: string;
+  portal: WiFiPortalData;
+}
+
+export interface WiFiPortalListResponse {
+  portals: WiFiPortalData[];
+}
+
 export const authAPI = {
   register: async (username: string, email: string, password: string): Promise<AuthResponse> => {
     const response = await api.post('/auth/register', { username, email, password });
@@ -103,6 +128,52 @@ export const qrAPI = {
 
   delete: async (id: string): Promise<{ message: string }> => {
     const response = await api.delete(`/qr/${id}`);
+    return response.data;
+  }
+};
+
+export const wifiPortalAPI = {
+  create: async (data: {
+    title: string;
+    slug: string;
+    ssid: string;
+    password: string;
+    security?: string;
+    instructions?: string;
+  }): Promise<WiFiPortalResponse> => {
+    const response = await api.post('/wifi-portal/create', data);
+    return response.data;
+  },
+
+  checkSlug: async (slug: string): Promise<{ available: boolean; message?: string }> => {
+    const response = await api.get(`/wifi-portal/check-slug/${slug}`);
+    return response.data;
+  },
+
+  getMyPortals: async (): Promise<WiFiPortalListResponse> => {
+    const response = await api.get('/wifi-portal/my-portals');
+    return response.data;
+  },
+
+  getPortal: async (portalId: string): Promise<WiFiPortalResponse> => {
+    const response = await api.get(`/wifi-portal/portal/${portalId}`);
+    return response.data;
+  },
+
+  update: async (portalId: string, data: {
+    title?: string;
+    ssid?: string;
+    password?: string;
+    security?: string;
+    instructions?: string;
+    isActive?: boolean;
+  }): Promise<WiFiPortalResponse> => {
+    const response = await api.put(`/wifi-portal/portal/${portalId}`, data);
+    return response.data;
+  },
+
+  delete: async (portalId: string): Promise<{ message: string }> => {
+    const response = await api.delete(`/wifi-portal/portal/${portalId}`);
     return response.data;
   }
 };

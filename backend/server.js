@@ -8,6 +8,7 @@ const { rateLimitConfig } = require('./utils/security');
 
 const authRoutes = require('./routes/auth');
 const qrRoutes = require('./routes/qr');
+const wifiPortalRoutes = require('./routes/wifiPortal');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -61,6 +62,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/qr', qrLimiter, qrRoutes);
+app.use('/api/wifi-portal', wifiPortalRoutes);
 
 app.get('/r/:shortId', async (req, res) => {
   try {

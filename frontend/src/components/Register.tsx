@@ -21,8 +21,29 @@ const Register: React.FC = () => {
       return;
     }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long');
+    // Validate password strength to match backend requirements
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      setError('Password must contain at least one lowercase letter');
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      setError('Password must contain at least one uppercase letter');
+      return;
+    }
+
+    if (!/[0-9]/.test(password)) {
+      setError('Password must contain at least one number');
+      return;
+    }
+
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+      setError('Password must contain at least one special character');
       return;
     }
 
@@ -213,6 +234,13 @@ const Register: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <p style={{
+                marginTop: '4px',
+                fontSize: '12px',
+                color: '#6B7280'
+              }}>
+                Must be at least 8 characters with uppercase, lowercase, number, and special character
+              </p>
             </div>
             <div>
               <label htmlFor="confirmPassword" style={{

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { QRCodeData, qrAPI } from '../services/api';
 import QRCodeCard from './QRCodeCard';
@@ -12,6 +13,7 @@ const spinKeyframes = `
 `;
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [qrCodes, setQrCodes] = useState<QRCodeData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -121,6 +123,26 @@ const Dashboard: React.FC = () => {
               <span style={{
                 color: '#374151'
               }}>Welcome, {user?.username}</span>
+              <button
+                onClick={() => navigate('/wifi-portals')}
+                style={{
+                  backgroundColor: '#4F46E5',
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: 'white',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4338CA'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4F46E5'}
+              >
+                📶 WiFi Portals
+              </button>
               <button
                 onClick={logout}
                 style={{
