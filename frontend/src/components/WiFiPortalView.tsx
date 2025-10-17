@@ -23,15 +23,18 @@ const WiFiPortalView: React.FC = () => {
   useEffect(() => {
     const fetchPortal = async () => {
       try {
-        // Use relative path for production or env variable for development
-        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '/api';
-        const response = await axios.get(`${API_BASE_URL}/wifi-portal/public/${slug}`);
+        // Use absolute path for API calls
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || `${window.location.origin}/api`;
+        const fullUrl = `${API_BASE_URL}/wifi-portal/public/${slug}`;
+        console.log('Fetching WiFi portal from:', fullUrl);
+        const response = await axios.get(fullUrl);
         if (response.data.success) {
           setPortal(response.data.portal);
         } else {
           setError('Portal not found');
         }
       } catch (err: any) {
+        console.error('WiFi portal fetch error:', err);
         setError(err.response?.data?.message || 'Failed to load WiFi portal');
       } finally {
         setLoading(false);
@@ -40,6 +43,9 @@ const WiFiPortalView: React.FC = () => {
 
     if (slug) {
       fetchPortal();
+    } else {
+      setError('No portal slug provided');
+      setLoading(false);
     }
   }, [slug]);
 
