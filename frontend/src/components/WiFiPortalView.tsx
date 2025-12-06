@@ -23,18 +23,15 @@ const WiFiPortalView: React.FC = () => {
   useEffect(() => {
     const fetchPortal = async () => {
       try {
-        // Use absolute path for API calls
+        // Use environment variable or fallback to production backend
         const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://srv.rdr.mk/api';
-        const fullUrl = `${API_BASE_URL}/wifi-portal/public/${slug}`;
-        console.log('Fetching WiFi portal from:', fullUrl);
-        const response = await axios.get(fullUrl);
+        const response = await axios.get(`${API_BASE_URL}/wifi-portal/public/${slug}`);
         if (response.data.success) {
           setPortal(response.data.portal);
         } else {
           setError('Portal not found');
         }
       } catch (err: any) {
-        console.error('WiFi portal fetch error:', err);
         setError(err.response?.data?.message || 'Failed to load WiFi portal');
       } finally {
         setLoading(false);
